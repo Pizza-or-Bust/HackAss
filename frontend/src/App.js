@@ -7,7 +7,7 @@ import Header from './Header';
 import Num_members from './NumberOfUsers';
 import Experience from './Experience';
 import NumberOfIdeas from './NumberOfIdeas';
-import {GeneratePrompt} from './helper/GeneratePrompt';
+import {GeneratePrompt, generatePromptTechincalResources} from './helper/GeneratePrompt';
 import { useState } from 'react';
 import LanguageFamiliarityInput from './LanguageFamiliarity';
 import DurationInput from './Duration';
@@ -70,12 +70,29 @@ function App() {
   }
   const [response, setResponse] = React.useState('');
 
+  function Generate2(){
+
+    const prompt = generatePromptTechincalResources(param);
+    console.log(prompt);
+
+    renderResponse(prompt);
+
+
+
+  }
+
   const renderResponse = async(prompt) => {
     const res = await v(prompt);
   
     setResponse(res);
   
     console.log("Here is the response from the API:  " + res);
+
+    const resStrings = res.split(".");
+    console.log(resStrings);
+    const filtered = resStrings.filter(element => element[0] !== '\n' && element !== '')
+    console.log(filtered);
+
   }
 
   // renderResponse();
